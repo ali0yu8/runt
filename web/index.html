@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RUNT, the coin that feeds small validators</title>
+    <meta name="description" content="A NEAR memecoin you can only earn by keeping NEAR delegated to a small validator. Live on testnet, with no owner and no oracle." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23ffb627'/%3E%3Cpath d='M14 24c-5-3-7-11-3-15 6 0 12 4 15 9zM50 24c5-3 7-11 3-15-6 0-12 4-15 9z' fill='%237a3e14'/%3E%3Cellipse cx='32' cy='36' rx='20' ry='18' fill='%23a65a24'/%3E%3Cellipse cx='32' cy='44' rx='11' ry='9' fill='%23ffe3b8'/%3E%3Ccircle cx='24' cy='32' r='3.4' fill='%23201008'/%3E%3Ccircle cx='40' cy='32' r='3.4' fill='%23201008'/%3E%3Cellipse cx='32' cy='40' rx='4' ry='3' fill='%23201008'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="band">
+      <header class="top wrap">
+        <a class="brand" href="#top">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#ffb627" /><path d="M14 24c-5-3-7-11-3-15 6 0 12 4 15 9zM50 24c5-3 7-11 3-15-6 0-12 4-15 9z" fill="#7a3e14" /><ellipse cx="32" cy="36" rx="20" ry="18" fill="#a65a24" /><ellipse cx="32" cy="44" rx="11" ry="9" fill="#ffe3b8" /><circle cx="24" cy="32" r="3.4" fill="#201008" /><circle cx="40" cy="32" r="3.4" fill="#201008" /><ellipse cx="32" cy="40" rx="4" ry="3" fill="#201008" /></svg>
+          <span>RUNT</span>
+        </a>
+        <nav>
+          <a href="#litter">The litter</a>
+          <a href="#log">Mints and burns</a>
+          <a href="#rules">Rules</a>
+          <a href="#sim">Simulation</a>
+          <a href="#verify">Check it</a>
+        </nav>
+        <button id="wallet" class="wallet">Connect wallet</button>
+      </header>
+
+      <main id="top" class="hero wrap">
+        <section class="pitch">
+          <p class="eyebrow" id="hero-where">NEAR mainnet</p>
+          <h1><span id="hero-nc" class="figure">–</span> <span id="hero-text">validators hold more than a third of NEAR's stake.</span></h1>
+          <p class="lede">If they all stopped, NEAR would stop finalizing. RUNT is a memecoin you can only earn by proving your NEAR is delegated to a small validator. It never touches your NEAR.</p>
+          <p class="whatif" id="whatif">&nbsp;</p>
+          <div class="cta">
+            <a class="button solid" href="#litter">Feed a runt</a>
+            <a class="button ghost" href="#how">How it works</a>
+          </div>
+        </section>
+
+        <aside class="ticket" aria-label="Today's meal">
+          <div class="ticket-head">
+            <div>
+              <span class="tag">Today's meal</span>
+              <h2 id="round-label">Round –</h2>
+            </div>
+            <div class="clock"><span class="soft" id="clock-label">Ends in</span><strong id="countdown">–:––</strong></div>
+          </div>
+          <div class="meter" role="progressbar" aria-label="Different runts fed this round" aria-valuemin="0" id="progress"><i id="progress-bar"></i></div>
+          <p class="progress-text"><strong id="plates">–</strong> <span id="plates-text">different runts fed</span></p>
+          <dl class="ticket-stats">
+            <div><dt>Feeders</dt><dd id="feeders">–</dd></div>
+            <div><dt>Streak</dt><dd id="streak">–</dd></div>
+            <div class="best"><dt>Best in Show</dt><dd id="best">–</dd></div>
+          </dl>
+          <p class="meal">If the pack makes it, <strong id="meal">–</strong> RUNT is minted and shared by everyone who fed.</p>
+          <button id="settle" class="button solid wide" hidden>This round is over. Close it</button>
+          <p class="coin-line">
+            <span id="coin-name" class="mono"></span>
+            <a id="coin-switch" href="#"></a>
+          </p>
+        </aside>
+      </main>
+    </div>
+
+    <section class="kpis wrap" aria-label="Token totals">
+      <div><span>Total supply</span><strong id="supply">–</strong></div>
+      <div><span>In the Kennel</span><strong id="kennel">–</strong></div>
+      <div><span>Minted, ever</span><strong id="minted">–</strong></div>
+      <div><span>Burned, ever</span><strong id="burned">–</strong></div>
+    </section>
+
+    <section id="how" class="wrap how">
+      <h2>The joke needs rules</h2>
+      <ol class="steps">
+        <li><b>Stake with a runt.</b> Delegate NEAR to any small validator. It stays your stake, in your account, earning normal staking rewards.</li>
+        <li><b>Feed it.</b> Once a round, press Feed. The contract reads your stake straight from the staking pool. The smaller the validator, the bigger your bite.</li>
+        <li><b>Make the target.</b> The pack has to feed enough <em>different</em> runts. Hit it and a meal is minted to everyone who fed, and the streak grows.</li>
+        <li><b>Miss it and the food spoils.</b> A slice of the Kennel burns, the streak resets and the target falls.</li>
+        <li><b>Take the roll call.</b> Anyone can make the contract count NEAR's biggest validators from the protocol's own numbers. If the count rises, the meal triples. If it falls, half the Kennel burns.</li>
+      </ol>
+    </section>
+
+    <section id="litter" class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>The litter</h2>
+          <p id="litter-sub" class="soft">Every active validator, biggest first. Red ones hold a third of the stake together. Green ones can be fed.</p>
+        </div>
+        <div class="switch" role="group" aria-label="Network">
+          <button id="net-testnet" class="on">Testnet</button>
+          <button id="net-mainnet">Mainnet</button>
+        </div>
+      </div>
+      <figure class="card chart" id="litter-chart">
+        <div class="plot"></div>
+        <figcaption class="legend">
+          <span><i class="sw big"></i>Big dogs: together they hold over a third</span>
+          <span><i class="sw runt"></i>Runts: small enough to feed</span>
+          <span><i class="sw other"></i>Too big to feed, or not from a locked pool factory</span>
+        </figcaption>
+      </figure>
+      <div class="card table-card">
+        <div class="table-scroll">
+          <table id="litter-table">
+            <thead>
+              <tr><th>Validator</th><th class="num">Stake</th><th class="num">Share</th><th>Hunger</th><th class="num net-coin">Fed this round</th><th class="num">Uptime</th><th class="num net-coin">Fee</th><th class="net-coin"></th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap trio">
+      <article class="card">
+        <h3>Your plate</h3>
+        <div id="plate-empty"><p class="soft">Connect a testnet wallet to feed a runt and see your bite and your meals.</p><button id="plate-connect" class="button solid wide">Connect wallet</button></div>
+        <dl id="plate" class="pairs" hidden>
+          <div><dt>Account</dt><dd id="me" class="mono"></dd></div>
+          <div><dt>This round</dt><dd id="my-plate"></dd></div>
+          <div><dt>Ready to claim</dt><dd id="claimable">0 RUNT</dd></div>
+          <div><dt>Your balance</dt><dd id="balance">0 RUNT</dd></div>
+        </dl>
+        <button id="claim" class="button solid wide" hidden>Claim my meal</button>
+      </article>
+
+      <article class="card">
+        <h3>Roll call</h3>
+        <p class="soft">Count every validator, biggest first. The contract checks the list against the protocol, so the answer is exact. The first count in each round earns <b id="bounty">–</b> RUNT from the Kennel.</p>
+        <dl class="pairs">
+          <div><dt>Validators it takes to hold a third</dt><dd id="census-nc">not counted yet</dd></div>
+          <div><dt>Active validators</dt><dd id="census-count">–</dd></div>
+          <div><dt>Effective validators</dt><dd id="census-eff">–</dd></div>
+          <div><dt>Best ever</dt><dd id="census-best">–</dd></div>
+        </dl>
+        <button id="rollcall" class="button solid wide">Take the roll call</button>
+      </article>
+
+      <article class="card">
+        <h3>The Kennel</h3>
+        <p class="soft">The coin's treasury, with three exits and no owner: it pays the roll call, it spoils when the pack misses, and it burns when NEAR gets more concentrated.</p>
+        <dl class="pairs">
+          <div><dt>Share of each meal kept</dt><dd id="k-cut">–</dd></div>
+          <div><dt>Burned on a missed round</dt><dd id="k-spoil">–</dd></div>
+          <div><dt>Burned when the count falls</dt><dd id="k-fall">–</dd></div>
+          <div><dt>Bonus when the count rises</dt><dd id="k-rise">–</dd></div>
+        </dl>
+      </article>
+    </section>
+
+    <section id="log" class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Every mint and burn</h2>
+          <p class="soft">The latest lines, read straight from the contract. Older ones stay in the chain's event log forever, and the table underneath keeps every round's totals.</p>
+        </div>
+      </div>
+      <div class="two">
+        <div class="card table-card">
+          <div class="table-scroll tall">
+            <table id="events">
+              <thead><tr><th>What</th><th class="num">RUNT</th><th>Who</th><th class="num">Round</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="empty" id="events-empty" hidden>No mints or burns yet.</p>
+        </div>
+        <div class="card table-card">
+          <div class="table-scroll tall">
+            <table id="rounds">
+              <thead><tr><th>Round</th><th>Result</th><th class="num">Runts</th><th class="num">Feeders</th><th class="num">Pot</th><th class="num">Burned</th><th class="num">Count</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="empty" id="rounds-empty" hidden>No rounds have closed yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="rules" class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>The rules, as the contract states them</h2>
+          <p class="soft">Set once at launch and read live from <code>rules()</code>. The account has no keys, so nobody can change them.</p>
+        </div>
+      </div>
+      <div class="card rules"><dl id="rules-list" class="rule-grid"></dl></div>
+    </section>
+
+    <section id="sim" class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Sixty days, simulated first</h2>
+          <p class="soft">Supply by day, starting from NEAR's real mainnet validator set. The stake figures are real. The people are invented, so this is a stress test and not a forecast.</p>
+        </div>
+      </div>
+      <figure class="card chart" id="supply-chart">
+        <div class="legend top-legend"></div>
+        <div class="plot"></div>
+      </figure>
+      <details class="card table-view">
+        <summary>Show the numbers</summary>
+        <div class="table-scroll">
+          <table id="sim-table">
+            <thead><tr><th>Scenario</th><th class="num">Hit rate</th><th class="num">Best streak</th><th class="num">Supply, M</th><th class="num">Burned, M</th><th class="num">Count at day 60</th><th class="num">NEAR moved</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <section class="wrap why">
+      <h2>What it gives NEAR</h2>
+      <div class="three">
+        <div><h3>A reason to move stake</h3><p>Delegators earn extra for leaving the biggest validators. That pressure is what raises the number at the top of this page.</p></div>
+        <div><h3>A better validator list</h3><p>Stake, share, uptime and fee in one table, with the small validators first. Your NEAR stays in your own stake.</p></div>
+        <div><h3>A decentralization figure with no oracle</h3><p>Any contract can call <code>nakamoto()</code> or <code>check_roll_call</code> and get a number measured from the protocol itself.</p></div>
+      </div>
+    </section>
+
+    <section id="verify" class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Check it yourself</h2>
+          <p class="soft">Live checks against the chain. <code>node scripts/verify.mjs</code> runs a longer list from your own machine.</p>
+        </div>
+      </div>
+      <div class="card"><ul id="checks" class="checks"></ul></div>
+    </section>
+
+    <footer class="wrap foot">
+      <p>RUNT runs on NEAR testnet and was built at NEAR HACKATHON. It is an experiment, not an investment. Staked NEAR takes four epochs, about 30 hours, to unstake.</p>
+    </footer>
+
+    <dialog id="feed-dialog">
+      <form method="dialog" id="feed-form">
+        <h3 id="fd-title">Feed this runt</h3>
+        <p id="fd-pool" class="mono"></p>
+        <dl class="pairs">
+          <div><dt>Hunger</dt><dd id="fd-hunger"></dd></div>
+          <div><dt>Your stake here</dt><dd id="fd-staked">checking…</dd></div>
+          <div><dt>Your bite would be</dt><dd id="fd-bite">–</dd></div>
+        </dl>
+        <label id="fd-amount-row" hidden>Stake this much more, in NEAR
+          <input id="fd-amount" type="number" min="0.1" step="0.1" inputmode="decimal" />
+        </label>
+        <p id="fd-note" class="soft"></p>
+        <div class="dialog-actions">
+          <button value="cancel" class="button ghost dark">Cancel</button>
+          <button id="fd-go" class="button solid" value="default">Feed</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" role="status" hidden></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

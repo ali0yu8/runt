@@ -1,0 +1,80 @@
+{
+ "size_cap_bps": 100,
+ "full_bite": 1000,
+ "hunger": [
+  {
+   "share_bps": 0,
+   "hunger_bps": 10000
+  },
+  {
+   "share_bps": 1,
+   "hunger_bps": 9801
+  },
+  {
+   "share_bps": 10,
+   "hunger_bps": 8100
+  },
+  {
+   "share_bps": 25,
+   "hunger_bps": 5625
+  },
+  {
+   "share_bps": 50,
+   "hunger_bps": 2500
+  },
+  {
+   "share_bps": 75,
+   "hunger_bps": 625
+  },
+  {
+   "share_bps": 99,
+   "hunger_bps": 1
+  },
+  {
+   "share_bps": 100,
+   "hunger_bps": 0
+  },
+  {
+   "share_bps": 150,
+   "hunger_bps": 0
+  }
+ ],
+ "bites": [
+  {
+   "hunger_bps": 10000,
+   "before": 0,
+   "stake": 100,
+   "bite_micro": 3162278
+  },
+  {
+   "hunger_bps": 10000,
+   "before": 100,
+   "stake": 300,
+   "bite_micro": 9486833
+  },
+  {
+   "hunger_bps": 5000,
+   "before": 400,
+   "stake": 500,
+   "bite_micro": 7905694
+  },
+  {
+   "hunger_bps": 8100,
+   "before": 0,
+   "stake": 2500,
+   "bite_micro": 40500000
+  },
+  {
+   "hunger_bps": 10000,
+   "before": 900,
+   "stake": 200,
+   "bite_micro": 4705749
+  },
+  {
+   "hunger_bps": 10000,
+   "before": 2000,
+   "stake": 2000,
+   "bite_micro": 18524194
+  }
+ ]
+}
